@@ -11,26 +11,7 @@ const layout = () => {
     navigate("/");
     location.reload();
   };
-  //Socket connection
-  if (localStorage.getItem("flag") === "1") {
-    console.log("hi into the socket connection");
-    const server = import.meta.env.VITE_ACTUAL_SERVER_API;
-    const connectionOptions = {
-      "force new connection": true,
-      reconnectionAttempts: "Infinity",
-      timeout: 10000,
-      transports: ["websocket"],
-    };
-    const socket = io(server, connectionOptions);
-    socket.emit("join_room", {});
-    const data = {
-      first: 0,
-      email: "test",
-      password: "da",
-      action: "LOGGED_IN",
-    };
-    socket.emit("track_action", data);
-  }
+  
   return (
     <div className="flex">
       <div className="w-96 p-2 bg-navigation h-screen text-white">
