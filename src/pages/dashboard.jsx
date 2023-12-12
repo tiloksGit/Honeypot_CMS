@@ -17,10 +17,7 @@ const dashboard = () => {
           </div>
         ))}
       </div>
-      <div>
-        
-      </div>
-
+      <div></div>
     </>
   );
 };
