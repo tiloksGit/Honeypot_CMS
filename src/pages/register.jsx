@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import client from "../../api";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import loadingIcon from "../assets/icons/work-in-progress.gif";
+import axios from "axios";
+
+axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
 
 const register = () => {
   const [name, setName] = useState("");
@@ -17,7 +19,7 @@ const register = () => {
     e.preventDefault();
     setIsLoading(true);
     console.log("done");
-    client
+    axios
       .post("/api/v1/user/register", {
         name: name,
         email: email,

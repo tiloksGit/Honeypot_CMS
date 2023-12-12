@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from "react";
-import client from "../../api";
+import { useLocation } from "react-router-dom";
 import avatar from "../assets/icons/avatar.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import loadingIcon from "../assets/icons/work-in-progress.gif";
+
+axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
+
 const login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginErr, setLoginErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const location1 = useLocation();
+  const params = new URLSearchParams(location1.search);
+
+  // console.log(params.get("token"));
+  // console.log(params.get("flag"));
+  useEffect(() => {
+    if (params.get("token") && params.get("flag")?.length) {
+      localStorage.setItem("accessKeyToken", params.get("token"));
+      localStorage.setItem("flag", params.get("flag"));
+      console.log(params.get("flag"));
+      location.reload();
+    }
+  }, []);
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    client
+    axios
       .post("/api/v1/user/login", {
         email: username,
         password,
@@ -21,7 +38,8 @@ const login = () => {
         console.log(response.data);
         if (response.data.success == true) {
           localStorage.setItem("accessKeyToken", response.data.token);
-          //   location.reload();
+          localStorage.setItem("flag", response.data.flag);
+          location.reload();
           setLoginErr(false);
         } else {
         }

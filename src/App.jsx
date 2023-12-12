@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import layouts from "./assets/routes";
 import Layout from "./pages/layout";
 import Dashboard from "./pages/dashboard";
@@ -7,6 +13,10 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 
 function App() {
+  
+
+  // console.log(searchParams.get("token"));
+
   return (
     <>
       <Router>

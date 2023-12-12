@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import Navigation from "../components/navigation";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const layout = () => {
   // useEffect(() => {});
+  const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("accessKeyToken");
+    localStorage.removeItem("flag");
+    navigate("/");
     location.reload();
   };
   return (
