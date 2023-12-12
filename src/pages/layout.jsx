@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "../components/navigation";
 import { Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { io } from "socket.io-client";
 import axios from "axios";
 
@@ -15,9 +16,9 @@ const layout = ({ socket }) => {
     location.reload();
   };
 
-  
   return (
     <div className="flex">
+      <ToastContainer />
       <div className="w-96 p-2 bg-navigation h-screen text-white">
         <Navigation />
         <button

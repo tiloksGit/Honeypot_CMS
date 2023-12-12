@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import layouts from "./assets/routes";
 import Layout from "./pages/layout";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
@@ -48,7 +47,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [data, socket]);
 
   return (
     <>
@@ -67,10 +66,14 @@ function App() {
                 path="/users_log"
                 element={<Logs socket={socket} data={usersData} />}
               />
-              <Route
-                path="/activity_log"
-                element={<ActivityLog socket={socket} data={usersData} />}
-              />
+              {localStorage.getItem("flag") ? (
+                ""
+              ) : (
+                <Route
+                  path="/activity_log"
+                  element={<ActivityLog socket={socket} data={usersData} />}
+                />
+              )}
               <Route
                 path="/security"
                 element={<Security socket={socket} data={usersData} />}

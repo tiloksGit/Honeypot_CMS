@@ -1,13 +1,53 @@
 import React from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const logs = ({ socket, data }) => {
-  const usersLog = data;
-
-  const handleDeleteUser = (e, key) => {
-    console.log(key);
+  const connection_socket = socket;
+  console.log(socket.connected);
+  const handleDeleteUser = (key) => {
+    console.log(key._id);
+    axios
+      .delete(`api/v1/user/cms/${key._id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessKeyToken")}`,
+        },
+      })
+      .then((response) => {
+        toast("user Deleted");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    socket.emit("track_action", {
+      first: 1,
+      action: `USER_DELETED_${key.email}`,
+    });
   };
 
-  const handleChangeRole = (e, key) => {};
+  const handleChangeRole = (key) => {
+    console.log(key._id);
+    axios
+      .put(
+        `api/v1/user/cms/${key._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessKeyToken")}`,
+          },
+        }
+      )
+      .then((response) => {
+        toast("Role Changed");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    socket.emit("track_action", {
+      first: 1,
+      action: `USER_DELETED_${key.email}`,
+    });
+  };
 
   return (
     <>
@@ -31,13 +71,13 @@ const logs = ({ socket, data }) => {
                 </section>
                 <section className="border p-2 w-[20rem] flex justify-around ">
                   <span
-                    onClick={(e, i) => handleDeleteUser(i)}
+                    onClick={(e) => handleDeleteUser(user)}
                     className="hover:text-bubble-gum bg-metal rounded-lg text-white p-1 cursor-pointer"
                   >
                     Delete User
                   </span>
                   <span
-                    onClick={(e, i) => handleChangeRole(i)}
+                    onClick={(e) => handleChangeRole(user)}
                     className="hover:text-bubble-gum bg-metal rounded-lg text-white p-1 cursor-pointer"
                   >
                     Change Role

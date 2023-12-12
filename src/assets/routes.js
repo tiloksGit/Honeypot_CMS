@@ -3,9 +3,29 @@ import UsersLog from "../pages/activeUser";
 import Logs from "../pages/logs";
 import Security from "../pages/security";
 import Login from "../pages/login"
-// import Layout from "../pages/layout"
-
-const layouts = [{
+// import Layout from "../pages/layout
+var layouts;
+if(localStorage.getItem("flag")==1){
+layouts= [{
+    path : "/",
+    element : Dashboard,
+    icon: "",
+    name : "Dashboard"
+},
+{
+    path: "users_log",
+    element: UsersLog,
+    icon: "",
+    name: "User Log"
+},
+{
+    path: "security",
+    element: Security,
+    icon: "",
+    name: "Security"
+},
+]}else{
+    layouts= [{
     path : "/",
     element : Dashboard,
     icon: "",
@@ -29,12 +49,9 @@ const layouts = [{
     icon: "",
     name: "Security"
 },
-// {
-//     path: "/login",
-//     element: Login,
-//     icon: "",
-//     name: "Login"
-// }
 ]
+}
+
+
 
 export default layouts
