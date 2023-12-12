@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "../components/navigation";
 import { Outlet, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import axios from "axios";
 
-const layout = () => {
+const layout = ({ socket }) => {
   const navigate = useNavigate();
+  const [usersData, setUsersData] = useState("");
+
   const logout = () => {
     localStorage.removeItem("accessKeyToken");
     localStorage.removeItem("flag");
     navigate("/");
     location.reload();
   };
+
   
   return (
     <div className="flex">

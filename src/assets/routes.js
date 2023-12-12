@@ -12,13 +12,13 @@ const layouts = [{
     name : "Dashboard"
 },
 {
-    path: "active_users",
+    path: "users_log",
     element: UsersLog,
     icon: "",
     name: "User Log"
 },
 {
-    path: "activity_logs",
+    path: "activity_log",
     element: Logs,
     icon: "",
     name: "Activity Log"
