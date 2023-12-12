@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navigation from "../components/navigation";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { io } from "socket.io-client";
-import axios from "axios";
 
 const layout = ({ socket }) => {
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const layout = ({ socket }) => {
         </button>
       </div>
       <div className="w-full text-red p-2">
-        <Outlet />
+        <Outlet/>
       </div>
     </div>
   );

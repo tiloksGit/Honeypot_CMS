@@ -3,8 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const logs = ({ socket, data }) => {
-  const connection_socket = socket;
-  console.log(socket.connected);
+
   const handleDeleteUser = (key) => {
     console.log(key._id);
     axios
@@ -19,10 +18,12 @@ const logs = ({ socket, data }) => {
       .catch((err) => {
         console.log(err);
       });
-    socket.emit("track_action", {
-      first: 1,
-      action: `USER_DELETED_${key.email}`,
-    });
+    if (connection_socket.connected) {
+      socket.emit("track_action", {
+        first: 1,
+        action: `USER_DELETED_${key.email}`,
+      });
+    }
   };
 
   const handleChangeRole = (key) => {
@@ -49,6 +50,8 @@ const logs = ({ socket, data }) => {
     });
   };
 
+  console.log("hello");
+
   return (
     <>
       <div className="text-2xl p-2 text-gray-100">User Log</div>
@@ -71,13 +74,13 @@ const logs = ({ socket, data }) => {
                 </section>
                 <section className="border p-2 w-[20rem] flex justify-around ">
                   <span
-                    onClick={(e) => handleDeleteUser(user)}
+                    onClick={() => handleDeleteUser(user)}
                     className="hover:text-bubble-gum bg-metal rounded-lg text-white p-1 cursor-pointer"
                   >
                     Delete User
                   </span>
                   <span
-                    onClick={(e) => handleChangeRole(user)}
+                    onClick={() => handleChangeRole(user)}
                     className="hover:text-bubble-gum bg-metal rounded-lg text-white p-1 cursor-pointer"
                   >
                     Change Role
