@@ -36,8 +36,7 @@ const App = () => {
     socket.emit("join_room", {});
     const data = {
       first: 0,
-      email: "test",
-      password: "da",
+      email: params.get("email"),
       action: "LOGGED_IN",
     };
     socket.emit("track_action", data);
@@ -80,7 +79,7 @@ const App = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex h-screen">
         <ToastContainer />
         <div className="w-96 p-2 bg-navigation h-screen text-white">
           <Navigation />
@@ -91,7 +90,7 @@ const App = () => {
             logout
           </button>
         </div>
-        <div className="w-full text-red p-2">
+        <div className="w-full text-red p-2 h-screen overflow-auto">
           <Routes>
             <Route path="/register" Component={Register} />
             {!localStorage.getItem("accessKeyToken") ? (
