@@ -75,8 +75,7 @@ const App = () => {
   const logout = () => {
     localStorage.removeItem("accessKeyToken");
     localStorage.removeItem("flag");
-    navigate("/");
-    location.reload();
+    location.replace("http://localhost:5175");
   };
 
   return (
