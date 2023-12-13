@@ -33,6 +33,7 @@ const App = () => {
   const navigate = useNavigate();
   const [loadData, setLoadData] = useState("");
   useEffect(() => {
+    console.log(socket.connected);
     socket.emit("join_room", {});
     const data = {
       first: 0,
@@ -48,6 +49,7 @@ const App = () => {
     axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
   }
   useEffect(() => {
+    console.log(axios.defaults.baseURL);
     axios
       .get("api/v1/user/cms", {
         headers: {
