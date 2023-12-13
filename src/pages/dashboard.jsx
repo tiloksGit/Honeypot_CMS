@@ -1,7 +1,6 @@
 import React from "react";
 
-const dashboard = ({socket, data}) => {
-  console.log("dashboard");
+const dashboard = ({ socket, data }) => {
   return (
     <>
       <div className="text-2xl p-2 text-gray-100">Dashboard</div>

@@ -34,6 +34,7 @@ const activeUser = ({ socket, data }) => {
             <h3 className="w-[8rem] border p-2">Timestamp</h3>
             <h3 className="w-[20rem] border p-2">Activity</h3>
             <h3 className="w-[10rem] border p-2">email</h3>
+            <h3 className="w-[10rem] border p-2">IP Address</h3>
           </section>
           {activities?.length
             ? activities.map((activity, i) => (
@@ -41,8 +42,9 @@ const activeUser = ({ socket, data }) => {
                   <h1 className="w-[8rem] border p-2">{`${dateObject.getHours()}:${dateObject.getMinutes()}:${dateObject.getSeconds()}`}</h1>
                   <h1 className="w-[20rem] border p-2">{activity.action}</h1>
                   <h1 className="w-[10rem] border p-2">
-                    {activity.email ? activity.email : ""}
+                    {activity.email ? activity.email : null}
                   </h1>
+                  <h3 className="w-[10rem] border p-2">{activity.ip}</h3>
                 </section>
               ))
             : ""}

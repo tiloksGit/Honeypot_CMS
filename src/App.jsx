@@ -49,7 +49,6 @@ const App = () => {
     axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
   }
   useEffect(() => {
-    console.log(axios.defaults.baseURL);
     axios
       .get("api/v1/user/cms", {
         headers: {
