@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import loadingIcon from "../assets/icons/work-in-progress.gif";
 
-axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
+// axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
 
 const login = () => {
   const [username, setUsername] = useState("");

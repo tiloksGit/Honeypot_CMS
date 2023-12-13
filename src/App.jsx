@@ -43,12 +43,12 @@ const App = () => {
     socket.emit("track_action", data);
   }, []);
   // console.log(socket.connected);
+  if (localStorage.getItem("flag") == "1") {
+    axios.defaults.baseURL = import.meta.env.VITE_HONEYPOT_SERVER_API;
+  } else if (localStorage.getItem("flag") == "0") {
+    axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
+  }
   useEffect(() => {
-    if (localStorage.getItem("flag") == 1) {
-      axios.defaults.baseURL = import.meta.env.VITE_HONEYPOT_SERVER_API;
-    } else {
-      axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
-    }
     axios
       .get("api/v1/user/cms", {
         headers: {
@@ -113,11 +113,11 @@ const App = () => {
                   path="/users_log"
                   element={<Logs socket={socket} data={usersData} />}
                 />
-                {localStorage.getItem("flag") ? (
+                {localStorage.getItem("flag") == 1 ? (
                   ""
                 ) : (
                   <Route
-                    path="/activity_log"
+                    path="/activity_logs"
                     element={<ActivityLog socket={socket} data={usersData} />}
                   />
                 )}

@@ -52,8 +52,6 @@ const logs = ({ socket, data }) => {
     console.log(socket.connected);
   };
 
-  console.log("hello");
-
   return (
     <>
       <div className="text-2xl p-2 text-gray-100">User Log</div>

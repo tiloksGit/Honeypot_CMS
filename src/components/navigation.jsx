@@ -23,7 +23,7 @@ const navigation = () => {
           User logs
         </li>
       </Link>
-      {localStorage.getItem("flag") ? (
+      {localStorage.getItem("flag") == 1 ? (
         ""
       ) : (
         <Link to="activity_logs">
