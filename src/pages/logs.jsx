@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const logs = ({ socket, data }) => {
-
   const handleDeleteUser = (key) => {
     console.log(key._id);
     axios
@@ -18,12 +17,14 @@ const logs = ({ socket, data }) => {
       .catch((err) => {
         console.log(err);
       });
-    if (connection_socket.connected) {
+    if (socket.connected) {
+      console.log("connected");
       socket.emit("track_action", {
         first: 1,
-        action: `USER_DELETED_${key.email}`,
+        action: `USER:DELETED:${key.email}`,
       });
     }
+    console.log(socket.connected);
   };
 
   const handleChangeRole = (key) => {
@@ -46,8 +47,9 @@ const logs = ({ socket, data }) => {
       });
     socket.emit("track_action", {
       first: 1,
-      action: `USER_DELETED_${key.email}`,
+      action: `ROLE:CHANGED:${key.email}`,
     });
+    console.log(socket.connected);
   };
 
   console.log("hello");

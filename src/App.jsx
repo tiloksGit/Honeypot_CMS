@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import Layout from "./pages/layout";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -13,14 +18,22 @@ import { io } from "socket.io-client";
 import axios from "axios";
 
 const server = import.meta.env.VITE_ACTUAL_SERVER_API;
-const socket = io(server);
+const connectionOptions = {
+  "force new connection": true,
+  reconnectionAttempts: "Infinity",
+  timeout: 10000,
+  transports: ["websocket"],
+};
+const socket = io(server, connectionOptions);
 
 const App = () => {
   const [usersData, setUsersData] = useState("");
-
+  const location1 = useLocation();
+  const params = new URLSearchParams(location1.search);
+  const navigate = useNavigate();
+  const [loadData, setLoadData] = useState("");
   useEffect(() => {
     socket.emit("join_room", {});
-
     const data = {
       first: 0,
       email: "test",
@@ -28,9 +41,7 @@ const App = () => {
       action: "LOGGED_IN",
     };
     socket.emit("track_action", data);
-    console.log("laura");
   }, []);
-
   // console.log(socket.connected);
   useEffect(() => {
     if (localStorage.getItem("flag") == 1) {
@@ -50,55 +61,75 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [usersData]);
+  }, []);
+
+  useEffect(() => {
+    if (params.get("token") && params.get("flag")?.length) {
+      localStorage.setItem("accessKeyToken", params.get("token"));
+      localStorage.setItem("flag", params.get("flag"));
+      console.log(params.get("flag"));
+      // location.reload();
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("accessKeyToken");
+    localStorage.removeItem("flag");
+    navigate("/");
+    location.reload();
+  };
 
   return (
     <>
-      <Router>
-        <div className="flex">
-          <ToastContainer />
-          <div className="w-96 p-2 bg-navigation h-screen text-white">
-            <Navigation />
-            <button
-              onClick={() => logout()}
-              className="relative bottom-[-40rem] w-full text-red list-none text-left text-lg p-3 hover:bg-navigation1"
-            >
-              logout
-            </button>
-          </div>
-          <div className="w-full text-red p-2">
-            <Routes>
-              <Route path="/register" Component={Register} />
-              {!localStorage.getItem("accessKeyToken") ? (
-                <Route path="/" Component={Login} />
-              ) : (
-                <>
-                  <Route
-                    index
-                    element={<Dashboard socket={socket} data={usersData} />}
-                  />
-                  <Route
-                    path="/users_log"
-                    element={<Logs socket={socket} data={usersData} />}
-                  />
-                  {localStorage.getItem("flag") ? (
-                    ""
-                  ) : (
-                    <Route
-                      path="/activity_log"
-                      element={<ActivityLog socket={socket} data={usersData} />}
-                    />
-                  )}
-                  <Route
-                    path="/security"
-                    element={<Security socket={socket} data={usersData} />}
-                  />
-                </>
-              )}
-            </Routes>
-          </div>
+      <div className="flex">
+        <ToastContainer />
+        <div className="w-96 p-2 bg-navigation h-screen text-white">
+          <Navigation />
+          <button
+            onClick={() => logout()}
+            className="relative bottom-[-40rem] w-full text-red list-none text-left text-lg p-3 hover:bg-navigation1"
+          >
+            logout
+          </button>
         </div>
-      </Router>
+        <div className="w-full text-red p-2">
+          <Routes>
+            <Route path="/register" Component={Register} />
+            {!localStorage.getItem("accessKeyToken") ? (
+              <Route path="/" Component={Login} />
+            ) : (
+              <>
+                <Route
+                  index
+                  element={
+                    <Dashboard
+                      socket={socket}
+                      data={usersData}
+                      setLoadData={setLoadData}
+                    />
+                  }
+                />
+                <Route
+                  path="/users_log"
+                  element={<Logs socket={socket} data={usersData} />}
+                />
+                {localStorage.getItem("flag") ? (
+                  ""
+                ) : (
+                  <Route
+                    path="/activity_log"
+                    element={<ActivityLog socket={socket} data={usersData} />}
+                  />
+                )}
+                <Route
+                  path="/security"
+                  element={<Security socket={socket} data={usersData} />}
+                />
+              </>
+            )}
+          </Routes>
+        </div>
+      </div>
     </>
   );
 };
