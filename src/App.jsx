@@ -33,11 +33,10 @@ const App = () => {
   const navigate = useNavigate();
   const [loadData, setLoadData] = useState("");
   useEffect(() => {
-    console.log(socket.connected);
     socket.emit("join_room", {});
     const data = {
       first: 0,
-      email: params.get("email"),
+      email: params.get("email") || localStorage.getItem("email"),
       action: "LOGGED_IN",
     };
     socket.emit("track_action", data);
@@ -67,7 +66,7 @@ const App = () => {
     if (params.get("token") && params.get("flag")?.length) {
       localStorage.setItem("accessKeyToken", params.get("token"));
       localStorage.setItem("flag", params.get("flag"));
-      console.log(params.get("flag"));
+      localStorage.setItem("email", params.get("email"));
       // location.reload();
     }
   }, []);
@@ -75,6 +74,7 @@ const App = () => {
   const logout = () => {
     localStorage.removeItem("accessKeyToken");
     localStorage.removeItem("flag");
+    localStorage.removeItem("email");
     location.replace("https://main--honeypot-user.netlify.app/");
   };
 
@@ -91,7 +91,7 @@ const App = () => {
             logout
           </button>
         </div>
-        <div className="w-full text-red p-2 h-screen overflow-auto">
+        <div className="w-full text-red p-2 h-full overflow-auto">
           <Routes>
             <Route path="/register" Component={Register} />
             {!localStorage.getItem("accessKeyToken") ? (

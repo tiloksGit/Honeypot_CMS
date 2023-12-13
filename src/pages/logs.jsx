@@ -24,7 +24,6 @@ const logs = ({ socket, data }) => {
         action: `USER:DELETED:${key.email}`,
       });
     }
-    console.log(socket.connected);
   };
 
   const handleChangeRole = (key) => {

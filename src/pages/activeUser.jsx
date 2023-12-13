@@ -18,13 +18,14 @@ const activeUser = ({ socket, data }) => {
       });
   }, []);
 
-  console.log("socket in", socket.connected);
   socket.on("track_action", (msg) => {
+    console.log("ip");
+    console.log(msg);
     setActivities([msg, ...activities]);
   });
   return (
     <>
-      <div className="text-2xl p-2 text-gray-100">Intruder Activities</div>
+      <div className="text-3xl font-medium p-2 text-gray-100 bg-silver">Intruder Activities</div>
       <div>
         <div className="text-2xl p-2 text-gray-100">
           Live Intrusion activity
