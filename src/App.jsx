@@ -74,7 +74,7 @@ const App = () => {
   const logout = () => {
     localStorage.removeItem("accessKeyToken");
     localStorage.removeItem("flag");
-    location.replace("http://localhost:5175");
+    location.replace("https://main--honeypot-user.netlify.app/");
   };
 
   return (
