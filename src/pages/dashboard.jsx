@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const dashboard = ({ socket, data }) => {
+const dashboard = ({ socket }) => {
+  const [data, setData] = useState("");
+  if (localStorage.getItem("flag") == 1) {
+    axios.defaults.baseURL = import.meta.env.VITE_HONEYPOT_SERVER_API;
+  } else {
+    axios.defaults.baseURL = import.meta.env.VITE_ACTUAL_SERVER_API;
+  }
+  useEffect(() => {
+    axios
+      .get("api/v1/user/cms", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessKeyToken")}`,
+        },
+      })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <div className="text-2xl p-2 text-gray-100">Dashboard</div>

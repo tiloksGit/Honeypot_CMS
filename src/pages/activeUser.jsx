@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const activeUser = ({ socket, data }) => {
+const activeUser = ({ socket }) => {
   const [logDetails, setLogDetails] = useState("");
   const [activities, setActivities] = useState([]);
   const dateObject = new Date();
@@ -25,17 +25,19 @@ const activeUser = ({ socket, data }) => {
   });
   return (
     <>
-      <div className="text-3xl font-medium p-2 text-gray-100 bg-silver">Intruder Activities</div>
+      <div className="text-3xl font-medium p-2 text-gray-100 bg-silver">
+        Intruder Activities
+      </div>
       <div>
         <div className="text-2xl p-2 text-gray-100">
           Live Intrusion activity
         </div>
         <div>
           <section className="flex gap-1">
-            <h3 className="w-[8rem] border p-2">Timestamp</h3>
-            <h3 className="w-[20rem] border p-2">Activity</h3>
-            <h3 className="w-[10rem] border p-2">email</h3>
-            <h3 className="w-[10rem] border p-2">IP Address</h3>
+            <h3 className="min-w-[8rem] border p-2">Timestamp</h3>
+            <h3 className="min-w-[20rem] border p-2">Activity</h3>
+            <h3 className="min-w-[10rem] border p-2">email</h3>
+            <h3 className="min-w-[10rem] border p-2">IP Address</h3>
           </section>
           {activities?.length
             ? activities.map((activity, i) => (
@@ -52,22 +54,24 @@ const activeUser = ({ socket, data }) => {
         </div>
       </div>
       <div className="flex-col justify-content items-center w-full">
-        <div className="text-2xl p-2 text-gray-100">Past Intrusions</div>
+        <div className="text-2xl p-2 text-gray-100 font-bold text-[#444]">
+          Past Intrusions
+        </div>
         <section className="flex text-xl font-medium gap-1">
-          <h3 className="w-[6rem] border p-2">Sl. no.</h3>
-          <h3 className="w-[15rem] border p-2">_id</h3>
-          <h3 className="w-[18rem] border p-2">Action performed</h3>
-          <h3 className="w-[14rem] border p-2">Timestamp</h3>
-          <h3 className="w-[14rem] border p-2">Ip address</h3>
+          <h3 className="min-w-[6rem] border p-2">Sl. no.</h3>
+          <h3 className="min-w-[15rem] border p-2">_id</h3>
+          <h3 className="min-w-[18rem] border p-2">Action performed</h3>
+          <h3 className="min-w-[14rem] border p-2">Timestamp</h3>
+          <h3 className="min-w-[14rem] border p-2">Ip address</h3>
         </section>
         {logDetails.length
           ? logDetails.map((log, i) => (
               <section className="flex gap-1" key={i}>
-                <h3 className="w-[6rem] border p-2">{i + 1}</h3>
-                <h3 className="w-[15rem] border p-2">{log._id}</h3>
-                <h3 className="w-[18rem] border p-2">{log.action}</h3>
-                <h3 className="w-[14rem] border p-2">{log.timestamp}</h3>
-                <h3 className="w-[14rem] border p-2">{log.ip_address}</h3>
+                <h3 className="min-w-[6rem] border p-2">{i + 1}</h3>
+                <h3 className="min-w-[15rem] border p-2">{log._id}</h3>
+                <h3 className="min-w-[18rem] border p-2">{log.action}</h3>
+                <h3 className="min-w-[14rem] border p-2">{log.timestamp}</h3>
+                <h3 className="min-w-[14rem] border p-2">{log.ip_address}</h3>
                 <section>
                   {/* <h3>{log.tried_Ac.password}</h3> */}
                   {/* <h3>{log.tried_Ac}</h3> */}
